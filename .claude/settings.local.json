@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\ORACLE\\tontine-parfums\" /s /b)",
+      "Bash(findstr:*)",
+      "Bash(find:*)",
+      "Bash(done)",
+      "Bash(php artisan:*)",
+      "Bash(cmd /c:*)",
+      "Bash(powershell:*)",
+      "Bash(nul)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
