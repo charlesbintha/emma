@@ -8,7 +8,13 @@
       "Bash(php artisan:*)",
       "Bash(cmd /c:*)",
       "Bash(powershell:*)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(flutter --version:*)",
+      "Bash(dir C:ORACLEtontine-parfumsflutter_app /b)",
+      "Bash(flutter create:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter run:*)"
     ],
     "deny": [],
     "ask": []

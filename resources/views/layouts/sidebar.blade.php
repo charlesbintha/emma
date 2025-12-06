@@ -56,6 +56,15 @@
                             <span>Paiements</span>
                         </a>
                     </li>
+
+                    @if(auth()->user()->isAdmin())
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">
+                            <i data-feather="bar-chart-2"></i>
+                            <span>Rapports</span>
+                        </a>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </nav>

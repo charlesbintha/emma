@@ -6,6 +6,7 @@ use App\Http\Controllers\PerfumeController;
 use App\Http\Controllers\TontineController;
 use App\Http\Controllers\TontineSubscriptionController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Admin\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,10 @@ Route::middleware(['auth'])->group(function () {
             ->name('payments.cancel');
         Route::post('payments/mark-late', [PaymentController::class, 'markAsLate'])
             ->name('payments.mark-late');
+
+        // Reports route
+        Route::get('admin/reports', [ReportController::class, 'index'])
+            ->name('admin.reports.index');
     });
 });
 

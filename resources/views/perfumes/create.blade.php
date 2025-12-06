@@ -79,7 +79,18 @@
 
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="price">Prix (FCFA) <span class="text-danger">*</span></label>
+                                    <label class="form-label" for="prix_achat">Prix d'achat (FCFA)</label>
+                                    <input type="number" class="form-control @error('prix_achat') is-invalid @enderror"
+                                           id="prix_achat" name="prix_achat" value="{{ old('prix_achat') }}"
+                                           min="0" step="0.01" placeholder="30000">
+                                    @error('prix_achat')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="form-text text-muted">Prix d'achat auprès du fournisseur</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="price">Prix de vente (FCFA) <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
                                            id="price" name="price" value="{{ old('price') }}"
                                            min="0" step="0.01" placeholder="50000" required>

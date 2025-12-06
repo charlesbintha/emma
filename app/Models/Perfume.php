@@ -15,6 +15,7 @@ class Perfume extends Model
         'brand',
         'description',
         'price',
+        'prix_achat',
         'image_url',
         'stock_quantity',
         'is_available',
@@ -22,6 +23,7 @@ class Perfume extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
+        'prix_achat' => 'decimal:2',
         'is_available' => 'boolean',
         'stock_quantity' => 'integer',
     ];
