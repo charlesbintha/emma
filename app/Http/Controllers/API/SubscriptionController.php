@@ -168,6 +168,105 @@ class SubscriptionController extends Controller
     // ========== SUBSCRIPTION METHODS ==========
 
     /**
+     * Create a subscription directly with items (for mobile app)
+     */
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'tontine_id' => 'required|exists:tontines,id',
+            'items' => 'required|array|min:1',
+            'items.*.perfume_id' => 'required|exists:perfumes,id',
+            'items.*.quantity' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $tontine = Tontine::find($request->tontine_id);
+
+        if ($tontine->status !== 'active' && $tontine->status !== 'pending') {
+            return response()->json([
+                'success' => false,
+                'message' => 'This tontine is not accepting subscriptions'
+            ], 400);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            // Create subscription
+            $subscription = TontineSubscription::create([
+                'user_id' => $request->user()->id,
+                'tontine_id' => $request->tontine_id,
+                'subscription_date' => now(),
+                'status' => 'active',
+            ]);
+
+            $totalAmount = 0;
+
+            // Create subscription items from request
+            foreach ($request->items as $item) {
+                $perfume = Perfume::find($item['perfume_id']);
+
+                if (!$perfume) {
+                    throw new \Exception("Perfume with ID {$item['perfume_id']} not found");
+                }
+
+                if (!$perfume->is_available || $perfume->stock_quantity < $item['quantity']) {
+                    throw new \Exception("Perfume '{$perfume->name}' is not available or has insufficient stock");
+                }
+
+                $subtotal = $perfume->price * $item['quantity'];
+                $totalAmount += $subtotal;
+
+                TontineSubscriptionItem::create([
+                    'tontine_subscription_id' => $subscription->id,
+                    'perfume_id' => $item['perfume_id'],
+                    'quantity' => $item['quantity'],
+                    'unit_price' => $perfume->price,
+                    'subtotal' => $subtotal,
+                ]);
+            }
+
+            // Create 4 payments
+            $paymentAmount = $totalAmount / 4;
+            $paymentDates = $tontine->getPaymentDueDates();
+
+            foreach ($paymentDates as $dueDate) {
+                Payment::create([
+                    'tontine_subscription_id' => $subscription->id,
+                    'amount' => $paymentAmount,
+                    'due_date' => $dueDate,
+                    'status' => 'pending',
+                ]);
+            }
+
+            DB::commit();
+
+            $subscription->load(['tontine', 'items.perfume', 'payments']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Subscription created successfully',
+                'data' => new TontineSubscriptionResource($subscription)
+            ], 201);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create subscription',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Subscribe to a tontine (confirm cart)
      */
     public function subscribe(Request $request, $tontineId)

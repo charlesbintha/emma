@@ -14,7 +14,10 @@
       "Bash(flutter create:*)",
       "Bash(flutter pub get:*)",
       "Bash(flutter analyze:*)",
-      "Bash(flutter run:*)"
+      "Bash(flutter run:*)",
+      "WebFetch(domain:emmaluxury.store)",
+      "Bash(curl:*)",
+      "Bash(dir C:ORACLEtontine-parfumstontine_mobile_app /b)"
     ],
     "deny": [],
     "ask": []

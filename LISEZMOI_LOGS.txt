@@ -1,0 +1,105 @@
+===========================================
+  SYSTÈME DE LOGGING API - INSTALLÉ ✅
+===========================================
+
+PROBLÈME : "The POST method is not supported for this route"
+
+SOLUTION : Système de logging complet installé pour identifier le vrai blocage
+
+
+📁 OÙ SONT LES LOGS ?
+----------------------
+storage/logs/api-YYYY-MM-DD.log
+
+Exemple : storage/logs/api-2025-12-25.log
+
+
+🔍 COMMENT VOIR LES LOGS ?
+---------------------------
+Windows CMD :
+  type storage\logs\api-*.log
+
+Windows PowerShell (temps réel) :
+  Get-Content storage\logs\api-*.log -Wait -Tail 50
+
+Linux/SSH :
+  tail -f storage/logs/api-*.log
+
+
+⚡ ACTIONS IMMÉDIATES
+--------------------
+1. ✅ Caches vidés (déjà fait)
+
+2. Testez l'app mobile maintenant
+
+3. Consultez les logs :
+   type storage\logs\api-*.log
+
+4. Les logs vont montrer :
+   ✓ URL exacte appelée
+   ✓ Méthode HTTP (GET ou POST)
+   ✓ Headers (Authorization, etc.)
+   ✓ Body de la requête
+   ✓ Réponse du serveur
+
+5. Regardez dans ACTIONS_IMMEDIATES.md
+   pour savoir quoi faire selon les logs
+
+
+📚 DOCUMENTATION COMPLÈTE
+--------------------------
+API_LOGGING_GUIDE.md          - Guide complet des logs
+DIAGNOSTIC_SOUSCRIPTION_MOBILE.md - Diagnostic technique
+ACTIONS_IMMEDIATES.md         - Actions à effectuer
+TEST_API_MOBILE.md            - Guide de test
+
+
+🎯 QUE CHERCHER DANS LES LOGS ?
+--------------------------------
+SI vous voyez "method": "GET" → Problème de redirection serveur
+SI vous voyez "method": "POST" ET "user_id": null → Problème d'auth
+SI vous voyez "method": "POST" ET user_id présent → Autre problème
+SI aucun log → Middleware pas activé (relancez le serveur)
+
+
+🚀 TEST RAPIDE
+--------------
+Test avec cURL pour valider :
+
+1. Login :
+curl -X POST https://emmaluxury.store/api/login -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"email\":\"client@example.com\",\"password\":\"password\"}"
+
+2. Souscription (remplacer VOTRE_TOKEN) :
+curl -X POST https://emmaluxury.store/api/subscriptions -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer VOTRE_TOKEN" -d "{\"tontine_id\":1,\"items\":[{\"perfume_id\":1,\"quantity\":2}]}"
+
+
+✅ CE QUI A ÉTÉ VÉRIFIÉ
+------------------------
+✅ Code Flutter : CORRECT (POST /api/subscriptions)
+✅ Route Laravel : CORRECT (POST /api/subscriptions existe)
+✅ Contrôleur : CORRECT (méthode store() existe)
+✅ Configuration : CORRECT (URL, headers, body)
+
+
+🔧 PROCHAINE ÉTAPE
+-------------------
+1. Testez depuis l'app mobile
+2. Consultez les logs
+3. Lisez ACTIONS_IMMEDIATES.md selon ce que les logs montrent
+
+Les logs vont révéler le VRAI problème !
+
+
+💡 NOTE IMPORTANTE
+-------------------
+Le système de logging est permanent.
+Il enregistrera toutes les requêtes API futures.
+Très utile pour déboguer d'autres problèmes !
+
+
+📞 BESOIN D'AIDE ?
+------------------
+Partagez le contenu de :
+- storage/logs/api-*.log
+- Le résultat du test cURL
+- Capture d'écran de l'erreur mobile

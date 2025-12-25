@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Subscription routes
     Route::post('/tontines/{tontineId}/subscribe', [SubscriptionController::class, 'subscribe']);
+    Route::post('/subscriptions', [SubscriptionController::class, 'store']);
     Route::get('/subscriptions', [SubscriptionController::class, 'index']);
     Route::get('/subscriptions/{id}', [SubscriptionController::class, 'show']);
     Route::post('/subscriptions/{id}/cancel', [SubscriptionController::class, 'cancel']);
