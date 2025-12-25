@@ -237,9 +237,10 @@ class SubscriptionController extends Controller
             $paymentAmount = $totalAmount / 4;
             $paymentDates = $tontine->getPaymentDueDates();
 
-            foreach ($paymentDates as $dueDate) {
+            foreach ($paymentDates as $index => $dueDate) {
                 Payment::create([
                     'tontine_subscription_id' => $subscription->id,
+                    'payment_number' => $index + 1, // 1, 2, 3, 4
                     'amount' => $paymentAmount,
                     'due_date' => $dueDate,
                     'status' => 'pending',
@@ -330,9 +331,10 @@ class SubscriptionController extends Controller
             $paymentAmount = $totalAmount / 4;
             $paymentDates = $tontine->getPaymentDueDates();
 
-            foreach ($paymentDates as $dueDate) {
+            foreach ($paymentDates as $index => $dueDate) {
                 Payment::create([
                     'tontine_subscription_id' => $subscription->id,
+                    'payment_number' => $index + 1, // 1, 2, 3, 4
                     'amount' => $paymentAmount,
                     'due_date' => $dueDate,
                     'status' => 'pending',
