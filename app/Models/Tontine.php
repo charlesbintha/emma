@@ -49,10 +49,10 @@ class Tontine extends Model
         }
 
         return [
-            1 => $this->start_date->copy(),                    // Paiement 1 : Jour 0
-            2 => $this->start_date->copy()->addDays(15),       // Paiement 2 : Jour 15
-            3 => $this->start_date->copy()->addDays(30),       // Paiement 3 : Jour 30
-            4 => $this->start_date->copy()->addDays(45),       // Paiement 4 : Jour 45
+            $this->start_date->copy(),                    // Paiement 1 : Jour 0
+            $this->start_date->copy()->addDays(15),       // Paiement 2 : Jour 15
+            $this->start_date->copy()->addDays(30),       // Paiement 3 : Jour 30
+            $this->start_date->copy()->addDays(45),       // Paiement 4 : Jour 45
         ];
     }
 
