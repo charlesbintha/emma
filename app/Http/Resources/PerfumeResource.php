@@ -7,10 +7,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class PerfumeResource extends JsonResource
 {
     /**
-     * Get the correct image URL based on environment
+     * Get the correct image URL
      *
-     * TEMPORARY FIX: Hostinger doesn't allow symlink creation via PHP
-     * This will use the direct path until symlink is created
+     * Le lien symbolique existe sur Hostinger, on utilise toujours le chemin standard
      */
     private function getImageUrl()
     {
@@ -18,16 +17,8 @@ class PerfumeResource extends JsonResource
             return null;
         }
 
-        // Check if storage symlink exists
-        $symlinkExists = is_link(public_path('storage'));
-
-        if ($symlinkExists) {
-            // Symlink exists, use standard Laravel path
-            return url('storage/' . $this->image_url);
-        } else {
-            // Symlink doesn't exist, use direct path (Hostinger workaround)
-            return url('storage/app/public/' . $this->image_url);
-        }
+        // Le lien symbolique existe, utiliser le chemin standard Laravel
+        return url('storage/' . $this->image_url);
     }
 
     /**
