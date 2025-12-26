@@ -17,12 +17,14 @@ class PaymentResource extends JsonResource
         return [
             'id' => $this->id,
             'subscription_id' => $this->tontine_subscription_id,
+            'payment_number' => $this->payment_number,
             'amount' => (float) $this->amount,
             'due_date' => $this->due_date?->format('Y-m-d'),
             'payment_date' => $this->payment_date?->format('Y-m-d'),
             'status' => $this->status,
             'payment_method' => $this->payment_method,
-            'payment_reference' => $this->payment_reference,
+            'payment_reference' => $this->reference,
+            'is_late' => $this->isLate(),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
         ];
     }

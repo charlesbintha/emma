@@ -87,7 +87,7 @@ class PaymentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'payment_method' => 'required|string',
-            'payment_reference' => 'required|string',
+            'reference' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -124,7 +124,7 @@ class PaymentController extends Controller
         }
 
         // Mark payment as paid
-        $payment->markAsPaid($request->payment_method, $request->payment_reference);
+        $payment->markAsPaid($request->payment_method, $request->reference);
 
         return response()->json([
             'success' => true,
