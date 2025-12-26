@@ -36,6 +36,14 @@ class Payment extends Model
     }
 
     /**
+     * Alias pour compatibilité
+     */
+    public function subscription()
+    {
+        return $this->tontineSubscription();
+    }
+
+    /**
      * Scope pour les paiements en attente
      */
     public function scopePending($query)
