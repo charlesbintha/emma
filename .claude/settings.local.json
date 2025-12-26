@@ -17,7 +17,9 @@
       "Bash(flutter run:*)",
       "WebFetch(domain:emmaluxury.store)",
       "Bash(curl:*)",
-      "Bash(dir C:ORACLEtontine-parfumstontine_mobile_app /b)"
+      "Bash(dir C:ORACLEtontine-parfumstontine_mobile_app /b)",
+      "Bash(dir \"C:\\\\ORACLE\\\\tontine-parfums\\\\tontine_parfums_app\\\\assets\" /s /b)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
